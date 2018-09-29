@@ -35,17 +35,18 @@ class ReservationListItem extends Component {
     if (this.props.renderDay) {
       return this.props.renderDay(date ? xdateToData(date) : undefined, item);
     }
+    const todayContainer = dateutils.sameDate(date, XDate()) ? this.styles.todayContainer : undefined;
     const today = dateutils.sameDate(date, XDate()) ? this.styles.today : undefined;
     if (date) {
       return (
-        <View style={this.styles.day}>
+        <View style={[this.styles.day,todayContainer]}>
           <Text allowFontScaling={false} style={[this.styles.dayNum, today]}>{date.getDate()}</Text>
-          <Text allowFontScaling={false} style={[this.styles.dayText, today]}>{XDate.locales[XDate.defaultLocale].dayNamesShort[date.getDay()]}</Text>
+          <Text allowFontScaling={false} style={[this.styles.dayText, today]}>{XDate.locales[XDate.defaultLocale].dayNames[date.getDay()].toUpperCase()}</Text>
         </View>
       );
     } else {
       return (
-        <View style={this.styles.day}/>
+        <View style={this.styles.emptyDay}/>
       );
     }
   }
